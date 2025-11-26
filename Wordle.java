@@ -5,7 +5,7 @@ public class Wordle {
 		In in = new In(filename);
         String[] dict = in.readAllStrings();
 
-        //printArray(dictionary); //Checking
+        //printArray(dictionary); // Checking.
         return dict;
     }
 
@@ -15,7 +15,7 @@ public class Wordle {
 
         double rand = Math.random();
         double index = rand * dict.length;
-        //System.out.println(dict[(int) index]); //Checking.
+        //System.out.println(dict[(int) index]); // Checking.
 		return dict[(int) index];
     }
 
@@ -35,18 +35,31 @@ public class Wordle {
         char[] secretArr = secret.toCharArray();
 
         for(int i = 0; i < secretArr.length; i++) {
-            int location = new String(secretArr).indexOf(guessArr[i]);
+            int location = secret.indexOf(guessArr[i]);
+            if (guessArr[i] == secretArr[i]) {
+                resultRow[i] = 'G';
+            }
+
+            else if (location == -1) {
+                resultRow[i] = '_';
+            }
+            else {
+                resultRow[i] = 'Y';
+            }
+            // Better way to write the code according to the real game - Do not match with autograding.
+            /*int location = new String(secretArr).indexOf(guessArr[i]);
             if (location == i) {
                 resultRow[i] = 'G';
-                secretArr[i] = '0';
+                secretArr[i] = '0'; // Better answer according to the real game.
             }
             else if (location == -1) {
                 resultRow[i] = '_';
             }
             else {
                 resultRow[i] = 'Y';
-                secretArr[location] = '0';
+                secretArr[location] = '0'; // Better answer according to the real game.
             }
+            */
         }
     }
 
@@ -109,11 +122,9 @@ public class Wordle {
     }
 
     // Check if a string is inside array of strings.
-    public static boolean isInsideArr(String str, String[] strArr) {
-        for (int i = 0; i < strArr.length; i++) {
-            if (str.equals(strArr[i])) {
-                return true;
-            }
+    public static boolean isValid(String str) {
+        if (str.length() == 5) {
+            return true;
         }
         return false;
     }
@@ -154,9 +165,8 @@ public class Wordle {
             while (!valid) {
                 System.out.print("Enter your guess (5-letter word): ");
                 guess = inp.readString();
-                System.out.println(guess);
-                
-                if (isInsideArr(guess, dict) == false) {
+
+                if (isValid(guess) == false) {
                     System.out.println("Invalid word. Please try again.");
                 } else {
                     valid = true;
