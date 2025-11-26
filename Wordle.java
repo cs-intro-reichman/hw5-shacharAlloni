@@ -140,7 +140,7 @@ public class Wordle {
 
         // Choose secret word
         String secret = chooseSecretWord(dict);
-        System.out.println(secret);
+        //System.out.println(secret);
 
 
         // Prepare 2D arrays for guesses and results
